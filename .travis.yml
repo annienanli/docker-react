@@ -1,0 +1,16 @@
+sudo: required 
+services:
+  - docker
+
+
+
+
+before_install:
+  - docker build -t annienanli/docker-react -f Dockerfile.dev .
+# -t annienanli/docker-react: the tag here is going to be used only in this build process internally, you can simply call it anything like MYIMAGE
+
+script:
+  - docker run -e CI=true annienanli/docker-react npm run test
+  # commands of test being executed: docker run image-id npm run test
+  # $ docker run annienanli/docker-react npm run test -- --coverage: -- --coverage is to exit the test 
+  # Updated script with required -e CI=true variable and omitting the coverage flag
