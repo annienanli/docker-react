@@ -14,3 +14,17 @@ script:
   # commands of test being executed: docker run image-id npm run test
   # $ docker run annienanli/docker-react npm run test -- --coverage: -- --coverage is to exit the test 
   # Updated script with required -e CI=true variable and omitting the coverage flag
+
+  
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "frontend"
+  env: "Frontend-env"
+  bucket_name: "elasticbeanstalk-us-east-1-058264305811"
+  bucket_path: "frontend" # bucket name is the same as your app name when first deploy
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
+
