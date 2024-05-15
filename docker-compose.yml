@@ -1,0 +1,26 @@
+version: "3"
+services:
+  web:
+    build:
+      # context: where we want all the files and folders for this image to be pulled from
+      context: .
+      # location of the dockerfile to be used
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes: # anytim that the docker container looks into the app folder, it'll get a reference back to the files on the local machine
+      
+      
+      # Do not try to map a folder up against app node_modules in side the container
+      - /app/node_modules
+      # the current working directory outside the container, maps into the app folder inside here
+      - .:/app
+  tests:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
